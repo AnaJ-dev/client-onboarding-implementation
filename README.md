@@ -42,28 +42,3 @@ flowchart TD
     K --> L[Slack - Notify Operations]
     L --> M[Form Ending - Customer confirmation]
 ```
-
-## Stored Data
-
-- `onboardingId`
-- `companyName`
-- `contactName`
-- `email`
-- `companySize`
-- `country`
-- `service`
-- `assignedTeam`
-- `priority`
-- `additionalNotes`
-- `status`
-- `submittedAt`
-
-## Tools Used
-
-- n8n Forms
-- Crypto node
-- Edit Fields
-- IF
-- Switch
-- Data Tables
-- Slack
