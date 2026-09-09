@@ -1,4 +1,4 @@
-# Week 11 — Client Onboarding Implementation
+Client Onboarding Implementation
 
 ## Project Overview
 
