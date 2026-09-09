@@ -1,0 +1,762 @@
+{
+  "name": "Client Onboarding Implementation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Client Onboarding Implementation",
+        "formDescription": "Client Onboarding Implementation. Please fill the form so we can contact you",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "company name",
+              "fieldName": "companyName",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "first name",
+              "fieldName": "firstName",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "last name",
+              "fieldName": "lastName",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "email",
+              "fieldType": "email",
+              "fieldName": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your company size",
+              "fieldType": "dropdown",
+              "fieldName": "companySize",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1-10"
+                  },
+                  {
+                    "option": "11-50"
+                  },
+                  {
+                    "option": "51-200"
+                  },
+                  {
+                    "option": "201+"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "country",
+              "fieldName": "country",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Desired Service",
+              "fieldType": "dropdown",
+              "fieldName": "service",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "SEO Consulting"
+                  },
+                  {
+                    "option": "Analytics Implementation"
+                  },
+                  {
+                    "option": "Automation Consulting"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Notes to add",
+              "fieldType": "textarea",
+              "fieldName": "additionalNotes"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [0, 0],
+      "id": "b632c57f-8df6-4173-9f7c-36776bb53c5d",
+      "name": "On form submission",
+      "webhookId": "05b3e766-5e30-4657-bfca-2179b251f17f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e290f022-5c3a-49df-8cf6-32752828030c",
+              "name": "companyName",
+              "value": "={{ $json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "a9b3b687-6c11-4312-9e13-5a73001d4437",
+              "name": "contactName",
+              "value": "={{ $json.firstName }} {{ $json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "818ea2cb-6515-4fda-b900-aac07ea687bf",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "65488e8c-001a-4cac-a96d-85b72872aebd",
+              "name": "companySize",
+              "value": "={{ $json.companySize }}",
+              "type": "string"
+            },
+            {
+              "id": "d9d6c9f8-b768-43d1-8ce9-8ea267616e63",
+              "name": "country",
+              "value": "={{ $json.country }}",
+              "type": "string"
+            },
+            {
+              "id": "5ad181b8-90d1-4cdf-b22c-88dfbf04602a",
+              "name": "service",
+              "value": "={{ $json.service }}",
+              "type": "string"
+            },
+            {
+              "id": "7fe8af5d-1c87-4705-84a4-ac7b83d339f2",
+              "name": "additionalNotes",
+              "value": "={{ $json.additionalNotes }}",
+              "type": "string"
+            },
+            {
+              "id": "063f0aed-1f14-404e-9281-cb723cd63c5d",
+              "name": "submittedAt",
+              "value": "={{ $json.submittedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "86c0c88b-3920-4e51-a618-493216213dbc",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [512, 0],
+      "id": "f7ddbb16-5ddd-451a-b7a0-a40e18bea32d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "id"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 2,
+      "position": [224, 0],
+      "id": "a009bfd7-d594-4089-8a45-a2294d85d090",
+      "name": "Crypto"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ba77ae91-f050-4dff-8186-404bf709e32c",
+              "leftValue": "={{ $json.companySize }}",
+              "rightValue": "201+",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [736, 0],
+      "id": "8912164d-ca34-4356-8ff1-18db25e6515f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7bef1bdb-8b2f-4a6a-9cff-953a264665da",
+              "name": "priority",
+              "value": "high",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [944, -96],
+      "id": "e4b248c0-c8c6-42bd-b05d-98dd72bdbee1",
+      "name": "High Priority"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7bef1bdb-8b2f-4a6a-9cff-953a264665da",
+              "name": "priority",
+              "value": "low",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [944, 80],
+      "id": "97f3c1ac-35d9-4220-bad0-7778f1a93a90",
+      "name": "Low Priority"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "SEO Consulting",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "85e55359-cf56-42dc-a3d1-50872baceecf"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d00c6994-5bae-4efe-a607-6e67b141b832",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "Analytics Implementation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c451d90d-68c7-48c6-91b3-254f297ec66d",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "Automation Consulting",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none",
+          "ignoreCase": false,
+          "allMatchingOutputs": false
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [1168, -16],
+      "id": "5d921353-f7ad-4c5f-a58f-ed2f5fe99d4a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e5c2aec-223d-4c28-86f4-9ef3bf6deed2",
+              "name": "sendToTeam",
+              "value": "SEO Team",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [1488, -96],
+      "id": "f8803327-dcb1-4ebe-a92a-ce6afc4ab330",
+      "name": "SEO team"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e5c2aec-223d-4c28-86f4-9ef3bf6deed2",
+              "name": "sendToTeam",
+              "value": "Analytics Team",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [1504, 48],
+      "id": "61d667e7-a3bb-4a4d-97a8-0974c2a1a538",
+      "name": "Analytics Team"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e5c2aec-223d-4c28-86f4-9ef3bf6deed2",
+              "name": "sendToTeam",
+              "value": "Automation Team",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [1504, 256],
+      "id": "685907f7-293f-43af-99d2-bbf28bbdfff1",
+      "name": "Automation Team"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "cpdFghN2GrtWW3WG",
+          "mode": "list",
+          "cachedResultName": "Onboarding",
+          "cachedResultUrl": "/projects/n6AwyIfmypvA4q3S/datatables/cpdFghN2GrtWW3WG"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "onboardingId": "={{ $('Edit Fields').item.json.id }}",
+            "companyName": "={{ $('Edit Fields').item.json.companyName }}",
+            "contactName": "={{ $('Edit Fields').item.json.contactName }}",
+            "email": "={{ $('Edit Fields').item.json.email }}",
+            "companySize": "={{ $('Edit Fields').item.json.companySize }}",
+            "country": "={{ $('Edit Fields').item.json.country }}",
+            "service": "={{ $('Edit Fields').item.json.service }}",
+            "assignedTeam": "={{ $json.sendToTeam }}",
+            "priority": "={{ $json.priority }}",
+            "additionalNotes": "={{ $json.additionalNotes }}",
+            "status": "new",
+            "submittedAt": "={{ $('Switch').item.json.submittedAt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "onboardingId",
+              "displayName": "onboardingId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companyName",
+              "displayName": "companyName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "contactName",
+              "displayName": "contactName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "companySize",
+              "displayName": "companySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "assignedTeam",
+              "displayName": "assignedTeam",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "additionalNotes",
+              "displayName": "additionalNotes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "submittedAt",
+              "displayName": "submittedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [1840, 48],
+      "id": "d48edc98-40ab-4122-b040-35fec1969174",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "onboarding successful",
+        "completionMessage": "=Thank you. Your onboarding request has been received.\n\nuser: {{ $('Insert row').item.json.onboardingId }}\nstatus = {{ $('Insert row').item.json.status }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [2288, 48],
+      "id": "0a85c53f-49c0-4c7c-8bf7-9459b207182d",
+      "name": "Form",
+      "webhookId": "28f72cd3-16f6-42af-baca-0b881c833a3b"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0C06KN1W3V",
+          "mode": "id"
+        },
+        "text": "=Your onboarding request has been submitted successfully.\n\nOnboarding ID: {{ $json.onboardingId }}\nStatus: {{ $json.status }}\npriority: {{ $json.priority }}\n",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.7,
+      "position": [2064, 48],
+      "id": "610180a0-ddda-45b3-940b-92aab3242ab8",
+      "name": "Send a message",
+      "webhookId": "0f6526c3-38d6-4090-b2c3-e9d9fe5a1937",
+      "credentials": {
+        "slackApi": {
+          "id": "REDACTED",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "High Priority",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Low Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Priority": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Low Priority": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "SEO team",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Analytics Team",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Automation Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics Team": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Automation Team": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO team": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f10aec7e-8ed1-44b6-aec1-4f74d7b40e18",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "243848769e1287b639ac1bac0ecb183f28020c0f19c0931ea7428227bda012dd"
+  },
+  "nodeGroups": [],
+  "id": "eeiauVyyhjFLytFS",
+  "tags": []
+}
